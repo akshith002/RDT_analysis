@@ -1,0 +1,39 @@
+clc
+clear all
+close all
+
+a1=imread('RDT1.jpg');
+imshow(a1)
+acrop=imread('rdt11.jpg');
+figure, imshow(acrop)
+agray=rgb2gray(acrop);
+figure, imshow(agray)
+[M,N]=size(agray);
+
+a11=agray(11:15,:);
+b11=agray(M-11:-1:M-15,:);
+
+[m1,n1]=size(a11);
+[m2,n2]=size(b11);
+
+
+for i1=1:m1
+  subplot(5,1,i1),plot(1:N,a11(i1,:))
+end
+figure,
+for i2=1:m2
+  subplot(5,1,i2),plot(1:N,b11(i2,:))
+ end
+ 
+ amean=mean(a11);
+ bmean=mean(b11);
+ cmean=[amean;bmean];
+ [m3,n3]=size(cmean);
+ figure,
+ for i3=1:m3
+   subplot(2,1,i3),plot(1:N,cmean(i3,:))
+ endfor
+ 
+ Rab=xcorr(cmean(1,:),cmean(2,:)); 
+ figure,plot(-N+1:N-1,Rab)
+ [as, ab]=max(Rab)
